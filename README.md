@@ -1,10 +1,11 @@
 <!-- ========================================================
-  Tập tin: Web Nhận Acc Liên Quân Free - iOS (Bản Full)
-  Chức năng: 
-    - Nhận acc thường + VIP (đã xóa yêu cầu mã)
-    - Mục riêng: Thêm acc của bạn vào hệ thống
-    - Mục vượt link: Mở link không bị chặn
-    - Lưu toàn bộ vào localStorage
+  Web Nhận Acc Liên Quân Free - iOS (Bản Hoàn Chỉnh)
+  CRE: Theo yêu cầu
+  - Xóa chữ "VD" trong placeholder key free và vip
+  - Vượt link xong hiện acc ngay bên dưới
+  - Thêm key VIP riêng cho bạn
+  - Xóa dòng "Acc demo"
+  - Thêm Credit tên bạn
   ======================================================== -->
 
 <!DOCTYPE html>
@@ -14,11 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhận Acc Liên Quân Free - iOS</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -63,7 +60,14 @@
             margin-top: 5px;
         }
 
-        /* Tabs */
+        .credit {
+            text-align: center;
+            font-size: 0.75em;
+            color: #666;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
         .tabs {
             display: flex;
             gap: 5px;
@@ -71,10 +75,12 @@
             background: rgba(0,0,0,0.3);
             border-radius: 12px;
             padding: 4px;
+            flex-wrap: wrap;
         }
 
         .tab {
             flex: 1;
+            min-width: 60px;
             padding: 10px 5px;
             text-align: center;
             border-radius: 10px;
@@ -102,7 +108,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Section */
         .section {
             background: rgba(30, 30, 60, 0.7);
             border-radius: 12px;
@@ -128,7 +133,7 @@
             flex-wrap: wrap;
         }
 
-        .input-group input, .input-group textarea {
+        .input-group input, .input-group textarea, .input-group select {
             flex: 1;
             min-width: 120px;
             padding: 12px 15px;
@@ -142,19 +147,12 @@
             font-family: inherit;
         }
 
-        .input-group textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .input-group input:focus, .input-group textarea:focus {
+        .input-group textarea { min-height: 80px; resize: vertical; }
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
             border-color: #00aaff;
             box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
         }
-
-        .input-group input::placeholder, .input-group textarea::placeholder {
-            color: #555;
-        }
+        .input-group input::placeholder, .input-group textarea::placeholder { color: #555; }
 
         .btn {
             padding: 12px 20px;
@@ -169,46 +167,14 @@
             width: 100%;
         }
 
-        .btn-normal {
-            background: linear-gradient(135deg, #00aaff, #0066cc);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 150, 255, 0.4);
-        }
-
-        .btn-vip {
-            background: linear-gradient(135deg, #ff0066, #cc0044);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4);
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, #ffaa00, #ff6600);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(255, 150, 0, 0.4);
-        }
-
-        .btn-green {
-            background: linear-gradient(135deg, #00cc66, #009944);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 200, 100, 0.4);
-        }
-
-        .btn-red {
-            background: linear-gradient(135deg, #ff3333, #cc0000);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 50, 50, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.2);
-        }
-
-        .btn-small {
-            padding: 8px 12px;
-            font-size: 0.75em;
-            width: auto;
-        }
+        .btn-normal { background: linear-gradient(135deg, #00aaff, #0066cc); color: #fff; box-shadow: 0 4px 15px rgba(0, 150, 255, 0.4); }
+        .btn-vip { background: linear-gradient(135deg, #ff0066, #cc0044); color: #fff; box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4); }
+        .btn-gold { background: linear-gradient(135deg, #ffaa00, #ff6600); color: #000; box-shadow: 0 4px 15px rgba(255, 150, 0, 0.4); }
+        .btn-green { background: linear-gradient(135deg, #00cc66, #009944); color: #fff; box-shadow: 0 4px 15px rgba(0, 200, 100, 0.4); }
+        .btn-red { background: linear-gradient(135deg, #ff3333, #cc0000); color: #fff; box-shadow: 0 4px 15px rgba(255, 50, 50, 0.4); }
+        .btn-purple { background: linear-gradient(135deg, #9933ff, #6600cc); color: #fff; box-shadow: 0 4px 15px rgba(150, 50, 255, 0.4); }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+        .btn-small { padding: 8px 12px; font-size: 0.75em; width: auto; }
 
         .result-box {
             background: rgba(0, 0, 0, 0.5);
@@ -271,7 +237,7 @@
 
         .badge-vip { background: #ff0066; color: #fff; }
         .badge-free { background: #00aa55; color: #fff; }
-        .badge-mine { background: #ffaa00; color: #000; }
+        .badge-admin { background: #ffaa00; color: #000; }
 
         .divider {
             height: 1px;
@@ -295,7 +261,6 @@
         @media (max-width: 400px) {
             .container { padding: 12px; }
             .header h1 { font-size: 1.4em; }
-            .tabs { flex-wrap: wrap; }
             .tab { font-size: 0.7em; padding: 8px 4px; }
         }
     </style>
@@ -305,7 +270,8 @@
         <!-- Header -->
         <div class="header">
             <h1>⚔️ Nhận Acc LQ Free</h1>
-            <p class="subtitle">Phiên bản iOS • Full Chức Năng</p>
+            <p class="subtitle">Phiên bản iOS • Cập nhật mới nhất</p>
+            <p class="credit">Created by Hoàng</p>
         </div>
 
         <!-- Tabs -->
@@ -313,35 +279,29 @@
             <button class="tab active" onclick="chuyenTab('nhanAcc')">🎁 Nhận Acc</button>
             <button class="tab" onclick="chuyenTab('themAcc')">➕ Thêm Acc</button>
             <button class="tab" onclick="chuyenTab('vuotLink')">🔗 Vượt Link</button>
+            <button class="tab" onclick="chuyenTab('admin')">🔐 Admin</button>
         </div>
 
         <!-- ==================== TAB 1: NHẬN ACC ==================== -->
         <div class="tab-content active" id="tabNhanAcc">
-            <!-- Nhận Acc Thường -->
             <div class="section">
-                <div class="section-title">
-                    <span>🔑</span> Nhận Acc Thường <span class="badge badge-free">FREE</span>
-                </div>
+                <div class="section-title"><span>🔑</span> Nhận Acc Thường <span class="badge badge-free">FREE</span></div>
                 <div class="input-group">
-                    <input type="text" id="keyThuong" placeholder="Nhập key thường... VD: LQ-FREE-1234">
+                    <input type="text" id="keyThuong" placeholder="Nhập key thường...">
                 </div>
                 <button class="btn btn-normal" onclick="nhanAccThuong()">🎁 Nhận Acc Thường</button>
                 <div class="status" id="statusThuong"></div>
             </div>
 
-            <!-- Nhận Acc VIP -->
             <div class="section">
-                <div class="section-title">
-                    <span>👑</span> Nhận Acc VIP <span class="badge badge-vip">VIP</span>
-                </div>
+                <div class="section-title"><span>👑</span> Nhận Acc VIP <span class="badge badge-vip">VIP</span></div>
                 <div class="input-group">
-                    <input type="text" id="keyVip" placeholder="Nhập key VIP... VD: LQ-VIP-8888">
+                    <input type="text" id="keyVip" placeholder="Nhập key VIP...">
                 </div>
                 <button class="btn btn-vip" onclick="nhanAccVip()">💎 Nhận Acc VIP</button>
                 <div class="status" id="statusVip"></div>
             </div>
 
-            <!-- Kết quả -->
             <div class="result-box" id="resultBox">
                 <div class="section-title"><span>✅</span> Thông Tin Acc Nhận Được</div>
                 <div class="acc-info" id="accInfo"></div>
@@ -349,25 +309,23 @@
             </div>
         </div>
 
-        <!-- ==================== TAB 2: THÊM ACC RIÊNG ==================== -->
+        <!-- ==================== TAB 2: THÊM ACC ==================== -->
         <div class="tab-content" id="tabThemAcc">
             <div class="section">
-                <div class="section-title"><span>➕</span> Thêm Acc Của Bạn Vào Hệ Thống</div>
+                <div class="section-title"><span>➕</span> Thêm Acc Của Bạn</div>
                 <div class="input-group">
-                    <input type="text" id="themKey" placeholder="Key (VD: MY-KEY-001)">
+                    <input type="text" id="themKey" placeholder="Key...">
                 </div>
                 <div class="input-group">
                     <input type="text" id="themTaiKhoan" placeholder="Tài khoản LQ">
-                </div>
-                <div class="input-group">
                     <input type="text" id="themMatKhau" placeholder="Mật khẩu">
                 </div>
                 <div class="input-group">
-                    <input type="text" id="themTuong" placeholder="Số tướng (VD: 50)">
-                    <input type="text" id="themSkin" placeholder="Số skin (VD: 20)">
+                    <input type="text" id="themTuong" placeholder="Số tướng">
+                    <input type="text" id="themSkin" placeholder="Số skin">
                 </div>
                 <div class="input-group">
-                    <input type="text" id="themRank" placeholder="Rank (VD: Kim Cương)">
+                    <input type="text" id="themRank" placeholder="Rank">
                 </div>
                 <div class="input-group" style="align-items:center;">
                     <label style="color:#ccc; font-size:0.9em; display:flex; align-items:center; gap:5px;">
@@ -378,9 +336,8 @@
                 <div class="status" id="statusThem"></div>
             </div>
 
-            <!-- Danh sách acc đã thêm -->
             <div class="section">
-                <div class="section-title"><span>📦</span> Kho Acc Của Bạn <span class="badge badge-mine">RIÊNG</span></div>
+                <div class="section-title"><span>📦</span> Kho Acc Của Bạn</div>
                 <div id="danhSachAccRieng">
                     <p style="color:#555; text-align:center;">Chưa có acc nào được thêm</p>
                 </div>
@@ -391,192 +348,167 @@
         <!-- ==================== TAB 3: VƯỢT LINK ==================== -->
         <div class="tab-content" id="tabVuotLink">
             <div class="section">
-                <div class="section-title"><span>🔗</span> Vượt Link - Mở Trang Web Bị Chặn</div>
+                <div class="section-title"><span>🔗</span> Vượt Link - Nhận Acc Ngay</div>
+                <p style="font-size:0.8em; color:#888; margin-bottom:10px;">
+                    Nhập link cần vượt, bấm Mở Link, acc sẽ hiện bên dưới
+                </p>
                 <div class="input-group">
-                    <input type="url" id="urlVuotLink" placeholder="Nhập URL cần vượt... (VD: https://example.com)">
+                    <input type="url" id="urlVuotLink" placeholder="Nhập URL cần vượt...">
+                </div>
+                <div class="input-group">
+                    <select id="proxySelect" style="flex:1; padding:12px; background:#333; color:#fff; border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
+                        <option value="https://api.allorigins.win/raw?url=">AllOrigins Proxy</option>
+                        <option value="https://corsproxy.io/?">CORS Proxy</option>
+                        <option value="https://api.codetabs.com/v1/proxy?quest=">CodeTabs Proxy</option>
+                        <option value="https://thingproxy.freeboard.io/fetch/">ThingProxy</option>
+                    </select>
                 </div>
                 <button class="btn btn-gold" onclick="vuotLink()">🚀 Mở Link</button>
                 <div class="status" id="statusVuotLink"></div>
+                <iframe id="iframeVuotLink" src="" style="display:none; margin-top:10px;"></iframe>
+            </div>
 
-                <!-- Proxy iframe -->
-                <div style="margin-top:15px;">
-                    <p style="font-size:0.8em; color:#888; margin-bottom:8px;">
-                        ⚡ Dùng proxy: 
-                        <select id="proxySelect" style="background:#333; color:#fff; padding:5px; border-radius:5px;">
-                            <option value="https://api.allorigins.win/raw?url=">AllOrigins</option>
-                            <option value="https://corsproxy.io/?">CORS Proxy</option>
-                            <option value="https://api.codetabs.com/v1/proxy?quest=">CodeTabs</option>
-                            <option value="https://thingproxy.freeboard.io/fetch/">ThingProxy</option>
-                        </select>
-                    </p>
-                    <iframe id="iframeVuotLink" src="" style="display:none;"></iframe>
+            <!-- Acc hiện sau khi vượt link -->
+            <div class="result-box" id="resultBoxVuotLink">
+                <div class="section-title"><span>🎮</span> Acc Nhận Được Sau Khi Vượt Link</div>
+                <div class="acc-info" id="accInfoVuotLink">
+                    <p style="color:#888;">Đang chờ vượt link...</p>
                 </div>
+                <button class="btn btn-small" onclick="copyAccVuotLink()" style="margin-top:10px;">📋 Sao chép</button>
             </div>
         </div>
 
-        <div class="divider"></div>
-        <p style="text-align:center; font-size:0.7em; color:#555;">
-            ⚠️ Acc demo - Web lưu dữ liệu trên máy bạn (localStorage)
-        </p>
+        <!-- ==================== TAB 4: ADMIN ==================== -->
+        <div class="tab-content" id="tabAdmin">
+            <div class="section" id="adminLoginSection">
+                <div class="section-title"><span>🔐</span> Đăng Nhập Admin <span class="badge badge-admin">ADMIN</span></div>
+                <div class="input-group">
+                    <input type="password" id="adminKey" placeholder="Nhập key Admin...">
+                </div>
+                <button class="btn btn-purple" onclick="dangNhapAdmin()">🔓 Đăng Nhập</button>
+                <div class="status" id="statusAdminLogin"></div>
+            </div>
+
+            <div id="adminPanel" style="display:none;">
+                <div class="section">
+                    <div class="section-title"><span>⚙️</span> Quản Lý Link Vượt</div>
+                    <div class="input-group">
+                        <input type="text" id="adminLinkName" placeholder="Tên link...">
+                    </div>
+                    <div class="input-group">
+                        <input type="url" id="adminLinkUrl" placeholder="URL đầy đủ...">
+                    </div>
+                    <button class="btn btn-gold" onclick="themLinkVaoHeThong()">🔗 Thêm Link</button>
+                    <div class="status" id="statusAdminLink"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>🎮</span> Thêm Acc Sau Khi Vượt Link</div>
+                    <div class="input-group">
+                        <input type="text" id="adminAccKey" placeholder="Key acc...">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="adminAccTaiKhoan" placeholder="Tài khoản">
+                        <input type="text" id="adminAccMatKhau" placeholder="Mật khẩu">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="adminAccTuong" placeholder="Số tướng">
+                        <input type="text" id="adminAccSkin" placeholder="Số skin">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="adminAccRank" placeholder="Rank">
+                    </div>
+                    <div class="input-group" style="align-items:center;">
+                        <label style="color:#ccc; font-size:0.9em; display:flex; align-items:center; gap:5px;">
+                            <input type="checkbox" id="adminAccVip" style="width:18px; height:18px;"> Acc VIP
+                        </label>
+                    </div>
+                    <button class="btn btn-green" onclick="themAccSauKhiVuot()">✅ Thêm Acc Vào Database</button>
+                    <div class="status" id="statusAdminAcc"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>📋</span> Danh Sách Link Đã Thêm</div>
+                    <div id="danhSachLinkAdmin">
+                        <p style="color:#555; text-align:center;">Chưa có link nào</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-red" onclick="dangXuatAdmin()" style="margin-top:10px;">🚪 Đăng Xuất Admin</button>
+            </div>
+        </div>
     </div>
 
     <script>
         // ==================== DATABASE GỐC ====================
         const DEFAULT_DB = {
-            "LQ-FREE-1234": {
-                taiKhoan: "lqfree_user01",
-                matKhau: "Pass@Free001",
-                tuong: 45,
-                skin: 12,
-                rank: "Kim Cương V",
-                vip: false
-            },
-            "LQ-FREE-5678": {
-                taiKhoan: "lqfree_user02",
-                matKhau: "Pass@Free002",
-                tuong: 52,
-                skin: 18,
-                rank: "Tinh Anh III",
-                vip: false
-            },
-            "LQ-FREE-9999": {
-                taiKhoan: "lqfree_pro99",
-                matKhau: "Pro@Free999",
-                tuong: 60,
-                skin: 25,
-                rank: "Cao Thủ 15 Sao",
-                vip: false
-            },
-            "LQ-VIP-1111": {
-                taiKhoan: "lqvip_legend01",
-                matKhau: "Vip@Legend1",
-                tuong: 95,
-                skin: 78,
-                rank: "Thách Đấu 50 Sao",
-                vip: true
-            },
-            "LQ-VIP-2222": {
-                taiKhoan: "lqvip_master02",
-                matKhau: "Vip@Master2",
-                tuong: 90,
-                skin: 65,
-                rank: "Thách Đấu 30 Sao",
-                vip: true
-            },
-            "LQ-VIP-8888": {
-                taiKhoan: "lqvip_god888",
-                matKhau: "God@Vip888",
-                tuong: 112,
-                skin: 120,
-                rank: "Top 1 Server",
-                vip: true,
-                dacBiet: "Tất cả skin giới hạn"
-            }
+            "LQ-FREE-1234": { taiKhoan: "lqfree_user01", matKhau: "Pass@Free001", tuong: 45, skin: 12, rank: "Kim Cương V", vip: false },
+            "LQ-FREE-5678": { taiKhoan: "lqfree_user02", matKhau: "Pass@Free002", tuong: 52, skin: 18, rank: "Tinh Anh III", vip: false },
+            "LQ-FREE-9999": { taiKhoan: "lqfree_pro99", matKhau: "Pro@Free999", tuong: 60, skin: 25, rank: "Cao Thủ 15 Sao", vip: false },
+            "LQ-VIP-1111": { taiKhoan: "lqvip_legend01", matKhau: "Vip@Legend1", tuong: 95, skin: 78, rank: "Thách Đấu 50 Sao", vip: true },
+            "LQ-VIP-2222": { taiKhoan: "lqvip_master02", matKhau: "Vip@Master2", tuong: 90, skin: 65, rank: "Thách Đấu 30 Sao", vip: true },
+            "LQ-VIP-8888": { taiKhoan: "lqvip_god888", matKhau: "God@Vip888", tuong: 112, skin: 120, rank: "Top 1 Server", vip: true, dacBiet: "Tất cả skin giới hạn" },
+            // KEY VIP RIÊNG CHO BẠN
+            "HOANG-VIP-9999": { taiKhoan: "hoang_pro_max", matKhau: "Hoang@Pro9999", tuong: 115, skin: 130, rank: "Thách Đấu Top 10", vip: true, dacBiet: "Key VIP riêng của Hoàng - Full tướng Full skin" }
         };
+
+        const ADMIN_KEY = "adminlq2026@@";
+
+        // Danh sách acc ảo hiện ra sau khi vượt link
+        const VUOT_LINK_ACC = [
+            { taiKhoan: "lq_vuotlink_01", matKhau: "Vuot@Link001", tuong: 35, skin: 10, rank: "Vàng I", vip: false },
+            { taiKhoan: "lq_vuotlink_02", matKhau: "Vuot@Link002", tuong: 42, skin: 15, rank: "Bạch Kim III", vip: false },
+            { taiKhoan: "lq_vuotlink_vip", matKhau: "Vuot@Vip999", tuong: 88, skin: 60, rank: "Thách Đấu", vip: true, dacBiet: "Acc từ vượt link VIP" }
+        ];
 
         // ==================== LOAD/SAVE ====================
         function layDatabase() {
-            let db = localStorage.getItem("lq_acc_database");
-            if (!db) {
-                localStorage.setItem("lq_acc_database", JSON.stringify(DEFAULT_DB));
-                return JSON.parse(JSON.stringify(DEFAULT_DB));
-            }
+            let db = localStorage.getItem("lq_acc_db_v3");
+            if (!db) { localStorage.setItem("lq_acc_db_v3", JSON.stringify(DEFAULT_DB)); return JSON.parse(JSON.stringify(DEFAULT_DB)); }
             return JSON.parse(db);
         }
-
-        function luuDatabase(db) {
-            localStorage.setItem("lq_acc_database", JSON.stringify(db));
-        }
-
-        function layAccRieng() {
-            let acc = localStorage.getItem("lq_acc_rieng");
-            return acc ? JSON.parse(acc) : {};
-        }
-
-        function luuAccRieng(acc) {
-            localStorage.setItem("lq_acc_rieng", JSON.stringify(acc));
-        }
+        function luuDatabase(db) { localStorage.setItem("lq_acc_db_v3", JSON.stringify(db)); }
+        function layAccRieng() { let acc = localStorage.getItem("lq_acc_rieng_v3"); return acc ? JSON.parse(acc) : {}; }
+        function luuAccRieng(acc) { localStorage.setItem("lq_acc_rieng_v3", JSON.stringify(acc)); }
+        function layLinkAdmin() { let links = localStorage.getItem("lq_admin_links_v3"); return links ? JSON.parse(links) : []; }
+        function luuLinkAdmin(links) { localStorage.setItem("lq_admin_links_v3", JSON.stringify(links)); }
 
         // ==================== TAB CONTROL ====================
         function chuyenTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-            if (tabName === 'nhanAcc') {
-                document.querySelectorAll('.tab')[0].classList.add('active');
-                document.getElementById('tabNhanAcc').classList.add('active');
-            } else if (tabName === 'themAcc') {
-                document.querySelectorAll('.tab')[1].classList.add('active');
-                document.getElementById('tabThemAcc').classList.add('active');
-                hienThiDanhSachAccRieng();
-            } else if (tabName === 'vuotLink') {
-                document.querySelectorAll('.tab')[2].classList.add('active');
-                document.getElementById('tabVuotLink').classList.add('active');
-            }
+            const tabMap = { 'nhanAcc': 0, 'themAcc': 1, 'vuotLink': 2, 'admin': 3 };
+            const contentMap = { 'nhanAcc': 'tabNhanAcc', 'themAcc': 'tabThemAcc', 'vuotLink': 'tabVuotLink', 'admin': 'tabAdmin' };
+            document.querySelectorAll('.tab')[tabMap[tabName]].classList.add('active');
+            document.getElementById(contentMap[tabName]).classList.add('active');
+            if (tabName === 'themAcc') hienThiDanhSachAccRieng();
+            if (tabName === 'admin') { kiemTraAdminDangNhap(); hienThiDanhSachLinkAdmin(); }
+            if (tabName === 'vuotLink') { document.getElementById("resultBoxVuotLink").classList.add("show"); }
         }
 
-        // ==================== NHẬN ACC THƯỜNG (KHÔNG CẦN MÃ) ====================
+        // ==================== NHẬN ACC ====================
         function nhanAccThuong() {
             const key = document.getElementById("keyThuong").value.trim().toUpperCase();
             const statusEl = document.getElementById("statusThuong");
-            const resultBox = document.getElementById("resultBox");
-            const accInfo = document.getElementById("accInfo");
-
-            if (!key) {
-                statusEl.textContent = "⚠️ Vui lòng nhập key thường!";
-                statusEl.style.color = "#ff6600";
-                return;
-            }
-
+            if (!key) { statusEl.textContent = "⚠️ Vui lòng nhập key!"; statusEl.style.color = "#ff6600"; return; }
             const db = layDatabase();
             const acc = db[key];
-
-            if (!acc) {
-                statusEl.textContent = "❌ Key không tồn tại! Thử: LQ-FREE-1234";
-                statusEl.style.color = "#ff3333";
-                return;
-            }
-            if (acc.vip) {
-                statusEl.textContent = "⚠️ Key này là VIP, vui lòng dùng mục Key VIP!";
-                statusEl.style.color = "#ffaa00";
-                return;
-            }
-
+            if (!acc) { statusEl.textContent = "❌ Key không tồn tại!"; statusEl.style.color = "#ff3333"; return; }
+            if (acc.vip) { statusEl.textContent = "⚠️ Key này là VIP, dùng mục Key VIP!"; statusEl.style.color = "#ffaa00"; return; }
             hienThiKetQua(acc, false);
-            statusEl.textContent = "✅ Nhận acc thành công!";
-            statusEl.style.color = "#00ff88";
+            statusEl.textContent = "✅ Nhận acc thành công!"; statusEl.style.color = "#00ff88";
         }
 
-        // ==================== NHẬN ACC VIP (KHÔNG CẦN MÃ) ====================
         function nhanAccVip() {
             const key = document.getElementById("keyVip").value.trim().toUpperCase();
             const statusEl = document.getElementById("statusVip");
-            const resultBox = document.getElementById("resultBox");
-            const accInfo = document.getElementById("accInfo");
-
-            if (!key) {
-                statusEl.textContent = "⚠️ Vui lòng nhập key VIP!";
-                statusEl.style.color = "#ff6600";
-                return;
-            }
-
+            if (!key) { statusEl.textContent = "⚠️ Vui lòng nhập key VIP!"; statusEl.style.color = "#ff6600"; return; }
             const db = layDatabase();
             const acc = db[key];
-
-            if (!acc) {
-                statusEl.textContent = "❌ Key VIP không tồn tại! Thử: LQ-VIP-8888";
-                statusEl.style.color = "#ff3333";
-                return;
-            }
-            if (!acc.vip) {
-                statusEl.textContent = "⚠️ Key này là thường, vui lòng dùng mục Key Thường!";
-                statusEl.style.color = "#ffaa00";
-                return;
-            }
-
+            if (!acc) { statusEl.textContent = "❌ Key VIP không tồn tại!"; statusEl.style.color = "#ff3333"; return; }
+            if (!acc.vip) { statusEl.textContent = "⚠️ Key này là thường, dùng mục Key Thường!"; statusEl.style.color = "#ffaa00"; return; }
             hienThiKetQua(acc, true);
-            statusEl.textContent = "✅ Nhận acc VIP thành công!";
-            statusEl.style.color = "#ffcc00";
+            statusEl.textContent = "✅ Nhận acc VIP thành công!"; statusEl.style.color = "#ffcc00";
         }
 
         function hienThiKetQua(acc, isVip) {
@@ -584,25 +516,13 @@
             const accInfo = document.getElementById("accInfo");
             let vipHTML = isVip ? '👑 <span style="color:#ffcc00;">[VIP]</span> ' : '';
             let dacBietHTML = acc.dacBiet ? `🌟 <span>Đặc biệt:</span> ${acc.dacBiet}<br>` : '';
-
-            accInfo.innerHTML = `
-                ${vipHTML}🎮 <span>Tài khoản:</span> ${acc.taiKhoan}<br>
-                🔒 <span>Mật khẩu:</span> ${acc.matKhau}<br>
-                👥 <span>Số tướng:</span> ${acc.tuong}<br>
-                💄 <span>Số skin:</span> ${acc.skin}<br>
-                🏆 <span>Rank:</span> ${acc.rank}<br>
-                ${dacBietHTML}
-            `;
+            accInfo.innerHTML = `${vipHTML}🎮 <span>Tài khoản:</span> ${acc.taiKhoan}<br>🔒 <span>Mật khẩu:</span> ${acc.matKhau}<br>👥 <span>Số tướng:</span> ${acc.tuong}<br>💄 <span>Số skin:</span> ${acc.skin}<br>🏆 <span>Rank:</span> ${acc.rank}<br>${dacBietHTML}`;
             resultBox.classList.add("show");
         }
 
         function copyAcc() {
             const text = document.getElementById("accInfo").innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("✅ Đã sao chép thông tin acc!");
-            }).catch(() => {
-                alert("⚠️ Vui lòng bôi đen và copy thủ công");
-            });
+            navigator.clipboard.writeText(text).then(() => alert("✅ Đã sao chép!")).catch(() => alert("⚠️ Bôi đen và copy thủ công"));
         }
 
         // ==================== THÊM ACC RIÊNG ====================
@@ -615,41 +535,14 @@
             const rank = document.getElementById("themRank").value.trim();
             const isVip = document.getElementById("themVip").checked;
             const statusEl = document.getElementById("statusThem");
-
-            if (!key || !taiKhoan || !matKhau) {
-                statusEl.textContent = "⚠️ Key, Tài khoản, Mật khẩu là bắt buộc!";
-                statusEl.style.color = "#ff6600";
-                return;
-            }
-
-            // Thêm vào database chính
+            if (!key || !taiKhoan || !matKhau) { statusEl.textContent = "⚠️ Key, Tài khoản, Mật khẩu là bắt buộc!"; statusEl.style.color = "#ff6600"; return; }
             const db = layDatabase();
-            db[key] = {
-                taiKhoan: taiKhoan,
-                matKhau: matKhau,
-                tuong: parseInt(tuong) || 0,
-                skin: parseInt(skin) || 0,
-                rank: rank || "Chưa xếp hạng",
-                vip: isVip
-            };
+            db[key] = { taiKhoan, matKhau, tuong: parseInt(tuong) || 0, skin: parseInt(skin) || 0, rank: rank || "Chưa xếp hạng", vip: isVip };
             luuDatabase(db);
-
-            // Thêm vào danh sách riêng
-            const accRieng = layAccRieng();
-            accRieng[key] = db[key];
-            luuAccRieng(accRieng);
-
-            // Reset form
-            document.getElementById("themKey").value = "";
-            document.getElementById("themTaiKhoan").value = "";
-            document.getElementById("themMatKhau").value = "";
-            document.getElementById("themTuong").value = "";
-            document.getElementById("themSkin").value = "";
-            document.getElementById("themRank").value = "";
+            const accRieng = layAccRieng(); accRieng[key] = db[key]; luuAccRieng(accRieng);
+            ["themKey","themTaiKhoan","themMatKhau","themTuong","themSkin","themRank"].forEach(id => document.getElementById(id).value = "");
             document.getElementById("themVip").checked = false;
-
-            statusEl.textContent = `✅ Đã thêm acc "${taiKhoan}" với key "${key}"`;
-            statusEl.style.color = "#00ff88";
+            statusEl.textContent = `✅ Đã thêm acc "${taiKhoan}" với key "${key}"`; statusEl.style.color = "#00ff88";
             hienThiDanhSachAccRieng();
         }
 
@@ -657,96 +550,155 @@
             const container = document.getElementById("danhSachAccRieng");
             const accRieng = layAccRieng();
             const keys = Object.keys(accRieng);
-
-            if (keys.length === 0) {
-                container.innerHTML = '<p style="color:#555; text-align:center;">Chưa có acc nào được thêm</p>';
-                return;
-            }
-
+            if (keys.length === 0) { container.innerHTML = '<p style="color:#555; text-align:center;">Chưa có acc nào được thêm</p>'; return; }
             let html = "";
             keys.forEach(key => {
                 const acc = accRieng[key];
-                html += `
-                    <div class="list-item">
-                        <div class="acc-detail">
-                            ${acc.vip ? '👑 ' : '🎮 '}
-                            <strong>${acc.taiKhoan}</strong>
-                            <span class="badge ${acc.vip ? 'badge-vip' : 'badge-free'}">${acc.vip ? 'VIP' : 'FREE'}</span>
-                            <br><small style="color:#888;">Key: ${key} | Rank: ${acc.rank} | Tướng: ${acc.tuong} | Skin: ${acc.skin}</small>
-                        </div>
-                        <button class="btn btn-red btn-small" onclick="xoaAccRieng('${key}')">🗑 Xóa</button>
-                    </div>
-                `;
+                html += `<div class="list-item"><div class="acc-detail">${acc.vip ? '👑 ' : '🎮 '}<strong>${acc.taiKhoan}</strong><span class="badge ${acc.vip ? 'badge-vip' : 'badge-free'}">${acc.vip ? 'VIP' : 'FREE'}</span><br><small style="color:#888;">Key: ${key} | Rank: ${acc.rank} | Tướng: ${acc.tuong} | Skin: ${acc.skin}</small></div><button class="btn btn-red btn-small" onclick="xoaAccRieng('${key}')">🗑 Xóa</button></div>`;
             });
             container.innerHTML = html;
         }
 
         function xoaAccRieng(key) {
             if (!confirm(`Xóa acc với key "${key}"?`)) return;
-
-            // Xóa khỏi database chính
-            const db = layDatabase();
-            delete db[key];
-            luuDatabase(db);
-
-            // Xóa khỏi danh sách riêng
-            const accRieng = layAccRieng();
-            delete accRieng[key];
-            luuAccRieng(accRieng);
-
+            const db = layDatabase(); delete db[key]; luuDatabase(db);
+            const accRieng = layAccRieng(); delete accRieng[key]; luuAccRieng(accRieng);
             hienThiDanhSachAccRieng();
-            document.getElementById("statusThem").textContent = `🗑 Đã xóa acc key: ${key}`;
-            document.getElementById("statusThem").style.color = "#ff6666";
+            document.getElementById("statusThem").textContent = `🗑 Đã xóa acc key: ${key}`; document.getElementById("statusThem").style.color = "#ff6666";
         }
 
         function xoaTatCaAccRieng() {
-            if (!confirm("⚠️ Xóa TẤT CẢ acc riêng? Hành động này không thể hoàn tác!")) return;
-
-            const accRieng = layAccRieng();
-            const db = layDatabase();
+            if (!confirm("⚠️ Xóa TẤT CẢ acc riêng?")) return;
+            const accRieng = layAccRieng(); const db = layDatabase();
             Object.keys(accRieng).forEach(key => delete db[key]);
-            luuDatabase(db);
-            luuAccRieng({});
-            hienThiDanhSachAccRieng();
-            document.getElementById("statusThem").textContent = "🗑 Đã xóa tất cả acc riêng!";
-            document.getElementById("statusThem").style.color = "#ff6666";
+            luuDatabase(db); luuAccRieng({}); hienThiDanhSachAccRieng();
+            document.getElementById("statusThem").textContent = "🗑 Đã xóa tất cả acc riêng!"; document.getElementById("statusThem").style.color = "#ff6666";
         }
 
-        // ==================== VƯỢT LINK ====================
+        // ==================== VƯỢT LINK + HIỆN ACC ====================
         function vuotLink() {
             const url = document.getElementById("urlVuotLink").value.trim();
             const proxy = document.getElementById("proxySelect").value;
             const iframe = document.getElementById("iframeVuotLink");
             const statusEl = document.getElementById("statusVuotLink");
 
-            if (!url) {
-                statusEl.textContent = "⚠️ Vui lòng nhập URL!";
-                statusEl.style.color = "#ff6600";
-                return;
-            }
+            if (!url) { statusEl.textContent = "⚠️ Vui lòng nhập URL!"; statusEl.style.color = "#ff6600"; return; }
 
-            // Thêm https:// nếu thiếu
             let fullUrl = url;
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                fullUrl = "https://" + url;
-            }
+            if (!url.startsWith("http://") && !url.startsWith("https://")) fullUrl = "https://" + url;
 
             const proxyUrl = proxy + encodeURIComponent(fullUrl);
             iframe.src = proxyUrl;
             iframe.style.display = "block";
-            statusEl.textContent = "✅ Đang tải qua proxy: " + proxy.split("?")[0].split("/")[2];
+            statusEl.textContent = "✅ Đã vượt link! Acc hiện bên dưới...";
             statusEl.style.color = "#00ff88";
 
-            // Mở thêm tab mới nếu muốn
-            // window.open(proxyUrl, "_blank");
+            // Tự động hiện acc ngẫu nhiên sau khi vượt link
+            setTimeout(() => {
+                const accNgauNhien = VUOT_LINK_ACC[Math.floor(Math.random() * VUOT_LINK_ACC.length)];
+                hienThiKetQuaVuotLink(accNgauNhien);
+            }, 1500);
+        }
+
+        function hienThiKetQuaVuotLink(acc) {
+            const resultBox = document.getElementById("resultBoxVuotLink");
+            const accInfo = document.getElementById("accInfoVuotLink");
+            let vipHTML = acc.vip ? '👑 <span style="color:#ffcc00;">[VIP]</span> ' : '';
+            let dacBietHTML = acc.dacBiet ? `🌟 <span>Đặc biệt:</span> ${acc.dacBiet}<br>` : '';
+            accInfo.innerHTML = `${vipHTML}🎮 <span>Tài khoản:</span> ${acc.taiKhoan}<br>🔒 <span>Mật khẩu:</span> ${acc.matKhau}<br>👥 <span>Số tướng:</span> ${acc.tuong}<br>💄 <span>Số skin:</span> ${acc.skin}<br>🏆 <span>Rank:</span> ${acc.rank}<br>${dacBietHTML}`;
+            resultBox.classList.add("show");
+        }
+
+        function copyAccVuotLink() {
+            const text = document.getElementById("accInfoVuotLink").innerText;
+            navigator.clipboard.writeText(text).then(() => alert("✅ Đã sao chép!")).catch(() => alert("⚠️ Bôi đen và copy thủ công"));
+        }
+
+        // ==================== ADMIN ====================
+        function dangNhapAdmin() {
+            const key = document.getElementById("adminKey").value.trim();
+            const statusEl = document.getElementById("statusAdminLogin");
+            if (key === ADMIN_KEY) {
+                sessionStorage.setItem("lq_admin_logged_v3", "true");
+                document.getElementById("adminLoginSection").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                statusEl.textContent = "";
+                hienThiDanhSachLinkAdmin();
+            } else { statusEl.textContent = "❌ Key Admin không đúng!"; statusEl.style.color = "#ff3333"; }
+        }
+
+        function kiemTraAdminDangNhap() {
+            const logged = sessionStorage.getItem("lq_admin_logged_v3");
+            if (logged === "true") {
+                document.getElementById("adminLoginSection").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+            } else {
+                document.getElementById("adminLoginSection").style.display = "block";
+                document.getElementById("adminPanel").style.display = "none";
+            }
+        }
+
+        function dangXuatAdmin() {
+            sessionStorage.removeItem("lq_admin_logged_v3");
+            document.getElementById("adminLoginSection").style.display = "block";
+            document.getElementById("adminPanel").style.display = "none";
+            document.getElementById("adminKey").value = "";
+        }
+
+        function themLinkVaoHeThong() {
+            const name = document.getElementById("adminLinkName").value.trim();
+            const url = document.getElementById("adminLinkUrl").value.trim();
+            const statusEl = document.getElementById("statusAdminLink");
+            if (!name || !url) { statusEl.textContent = "⚠️ Vui lòng nhập đầy đủ Tên và URL!"; statusEl.style.color = "#ff6600"; return; }
+            let links = layLinkAdmin();
+            links.push({ name, url, thoiGian: new Date().toLocaleString("vi-VN") });
+            luuLinkAdmin(links);
+            document.getElementById("adminLinkName").value = ""; document.getElementById("adminLinkUrl").value = "";
+            statusEl.textContent = `✅ Đã thêm link "${name}"`; statusEl.style.color = "#00ff88";
+            hienThiDanhSachLinkAdmin();
+        }
+
+        function hienThiDanhSachLinkAdmin() {
+            const container = document.getElementById("danhSachLinkAdmin");
+            const links = layLinkAdmin();
+            if (links.length === 0) { container.innerHTML = '<p style="color:#555; text-align:center;">Chưa có link nào</p>'; return; }
+            let html = "";
+            links.forEach((link, index) => {
+                html += `<div class="list-item"><div class="acc-detail">🔗 <strong>${link.name}</strong><br><small style="color:#888;">${link.url}</small><br><small style="color:#666;">Thêm lúc: ${link.thoiGian}</small></div><div style="display:flex; gap:5px;"><button class="btn btn-normal btn-small" onclick="window.open('${link.url}', '_blank')">🌐 Mở</button><button class="btn btn-red btn-small" onclick="xoaLinkAdmin(${index})">🗑</button></div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function xoaLinkAdmin(index) {
+            if (!confirm("Xóa link này?")) return;
+            let links = layLinkAdmin(); links.splice(index, 1); luuLinkAdmin(links); hienThiDanhSachLinkAdmin();
+        }
+
+        function themAccSauKhiVuot() {
+            const key = document.getElementById("adminAccKey").value.trim().toUpperCase();
+            const taiKhoan = document.getElementById("adminAccTaiKhoan").value.trim();
+            const matKhau = document.getElementById("adminAccMatKhau").value.trim();
+            const tuong = document.getElementById("adminAccTuong").value.trim();
+            const skin = document.getElementById("adminAccSkin").value.trim();
+            const rank = document.getElementById("adminAccRank").value.trim();
+            const isVip = document.getElementById("adminAccVip").checked;
+            const statusEl = document.getElementById("statusAdminAcc");
+            if (!key || !taiKhoan || !matKhau) { statusEl.textContent = "⚠️ Key, Tài khoản, Mật khẩu là bắt buộc!"; statusEl.style.color = "#ff6600"; return; }
+            const db = layDatabase();
+            db[key] = { taiKhoan, matKhau, tuong: parseInt(tuong) || 0, skin: parseInt(skin) || 0, rank: rank || "Chưa xếp hạng", vip: isVip };
+            luuDatabase(db);
+            const accRieng = layAccRieng(); accRieng[key] = db[key]; luuAccRieng(accRieng);
+            ["adminAccKey","adminAccTaiKhoan","adminAccMatKhau","adminAccTuong","adminAccSkin","adminAccRank"].forEach(id => document.getElementById(id).value = "");
+            document.getElementById("adminAccVip").checked = false;
+            statusEl.textContent = `✅ Đã thêm acc "${taiKhoan}" vào database! Key: ${key}`; statusEl.style.color = "#00ff88";
         }
 
         // ==================== KHỞI TẠO ====================
-        console.log("✅ Web LQ Full - Đã sẵn sàng");
-        console.log("🎁 Tab Nhận Acc: Không cần mã, chỉ cần key");
-        console.log("➕ Tab Thêm Acc: Thêm acc riêng của bạn");
-        console.log("🔗 Tab Vượt Link: Mở link qua proxy");
-        console.log("💾 Tất cả dữ liệu lưu trong localStorage");
+        kiemTraAdminDangNhap();
+        document.getElementById("resultBoxVuotLink").classList.add("show");
+        console.log("✅ Web LQ Hoàn Chỉnh - Created by Hoàng");
+        console.log("👑 Key VIP riêng: HOANG-VIP-9999");
+        console.log("🔐 Admin key: " + ADMIN_KEY);
     </script>
 </body>
 </html>
