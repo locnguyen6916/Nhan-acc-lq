@@ -2,94 +2,88 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Hệ Thống Quản Trị Key</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Key & Tài Khoản</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f1f5f9; display: flex; justify-content: center; padding: 20px; }
-        .wrapper { width: 100%; max-width: 600px; }
-        .card { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #4f46e5; border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #4338ca; }
+        :root { --primary: #4f46e5; --bg: #0f172a; --card: #1e293b; }
+        body { font-family: sans-serif; background: var(--bg); color: #f1f5f9; display: flex; justify-content: center; padding: 20px; }
+        .container { width: 100%; max-width: 500px; }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--primary); border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .hidden { display: none; }
-        #adminPanel { border: 2px dashed #ef4444; }
-        .link-section { text-align: center; margin-bottom: 20px; }
+        .link-btn { background: #059669; display: block; text-align: center; text-decoration: none; color: white; padding: 12px; border-radius: 6px; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <div class="card link-section">
+<div class="container">
+    <div class="card">
         <h3>Vượt link lấy Key Free</h3>
-        <a id="publicLink" href="#" style="color: #22d3ee; font-weight: bold;">Chưa có cấu hình Link</a>
+        <a id="linkFreeOut" href="#" class="link-btn" target="_blank">Chưa cấu hình Link</a>
     </div>
 
     <div class="card">
-        <h3>Kích hoạt hệ thống</h3>
-        <input type="text" id="userKey" placeholder="Nhập Key Free hoặc Vip...">
-        <button onclick="validateKey()">Kiểm tra Key</button>
-        <p id="output" style="margin-top: 15px; color: #10b981;"></p>
+        <h3>Nhập Key</h3>
+        <input type="text" id="inputKey" placeholder="Nhập Key Free hoặc Vip...">
+        <button onclick="checkKey()">Kiểm tra</button>
+        <p id="result" style="margin-top: 10px;"></p>
     </div>
 
-    <div class="card" id="adminPanel">
-        <h3 style="color: #ef4444;">Mục của Admin</h3>
-        <input type="password" id="adminKey" placeholder="Nhập Key Admin...">
-        <button onclick="accessAdmin()">Truy cập Admin</button>
+    <div class="card">
+        <h3>Mục Admin</h3>
+        <input type="password" id="adminPass" placeholder="Nhập key Admin...">
+        <button onclick="accessAdmin()">Truy cập</button>
 
-        <div id="adminTools" class="hidden">
-            <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
-            <input type="text" id="targetKey" placeholder="Key (Free/Vip)">
-            <textarea id="targetAcc" placeholder="Tài khoản trả về..."></textarea>
-            <button onclick="saveAccount()" style="background: #059669;">Lưu Acc</button>
+        <div id="adminPanel" class="hidden">
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #334155;">
+            <h4>Thêm Acc</h4>
+            <input type="text" id="newKey" placeholder="Mã Key">
+            <textarea id="newAcc" placeholder="Dữ liệu Acc..."></textarea>
+            <button onclick="saveAcc()" style="background: #059669;">Lưu Acc</button>
             
-            <h4 style="margin-top: 20px;">Cấu hình Link vượt</h4>
-            <input type="text" id="linkInput" placeholder="Nhập đường dẫn URL...">
+            <h4 style="margin-top: 20px;">Cấu hình Vượt Link</h4>
+            <input type="text" id="newLink" placeholder="URL vượt link...">
             <button onclick="saveLink()" style="background: #ea580c;">Lưu Link</button>
         </div>
     </div>
 </div>
 
 <script>
-    const ADMIN_KEY = "Locnguyen151110";
-
-    function validateKey() {
-        const key = document.getElementById('userKey').value;
-        const db = JSON.parse(localStorage.getItem('database') || '{}');
-        document.getElementById('output').innerText = db[key] ? "Tài khoản: " + db[key] : "Key không tồn tại!";
-    }
-
     function accessAdmin() {
-        if (document.getElementById('adminKey').value === ADMIN_KEY) {
-            document.getElementById('adminTools').classList.remove('hidden');
-        } else {
-            alert("Key Admin sai!");
-        }
+        if(document.getElementById('adminPass').value === "Locnguyen") {
+            document.getElementById('adminPanel').classList.remove('hidden');
+        } else { alert("Sai mật khẩu Admin!"); }
     }
 
-    function saveAccount() {
-        const key = document.getElementById('targetKey').value;
-        const acc = document.getElementById('targetAcc').value;
-        const db = JSON.parse(localStorage.getItem('database') || '{}');
-        db[key] = acc;
-        localStorage.setItem('database', JSON.stringify(db));
-        alert("Đã lưu Acc!");
+    function saveAcc() {
+        const k = document.getElementById('newKey').value;
+        const a = document.getElementById('newAcc').value;
+        localStorage.setItem('acc_' + k, a);
+        alert("Đã lưu!");
     }
 
     function saveLink() {
-        const url = document.getElementById('linkInput').value;
-        localStorage.setItem('publicLink', url);
-        updatePublicLink(url);
+        const l = document.getElementById('newLink').value;
+        localStorage.setItem('link', l);
+        document.getElementById('linkFreeOut').href = l;
+        document.getElementById('linkFreeOut').innerText = "Vượt link tại đây";
+        alert("Đã lưu link!");
     }
 
-    function updatePublicLink(url) {
-        const link = document.getElementById('publicLink');
-        link.href = url;
-        link.innerText = "Bấm vào đây để lấy Key Free";
+    function checkKey() {
+        const k = document.getElementById('inputKey').value;
+        const res = localStorage.getItem('acc_' + k);
+        document.getElementById('result').innerText = res ? "Acc: " + res : "Key sai hoặc không tồn tại!";
     }
 
     window.onload = () => {
-        const url = localStorage.getItem('publicLink');
-        if (url) updatePublicLink(url);
-    };
+        const l = localStorage.getItem('link');
+        if(l) { 
+            document.getElementById('linkFreeOut').href = l; 
+            document.getElementById('linkFreeOut').innerText = "Vượt link tại đây"; 
+        }
+    }
 </script>
 </body>
 </html>
