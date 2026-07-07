@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Key & Tài Khoản</title>
     <style>
-        :root { --primary: #4f46e5; --bg: #0f172a; --card: #1e293b; }
-        body { font-family: sans-serif; background: var(--bg); color: #f1f5f9; display: flex; justify-content: center; padding: 20px; }
+        :root { --primary: #6366f1; --accent: #8b5cf6; --bg: #0f172a; --card: #1e293b; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); 
+            color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; padding: 20px; 
+        }
         .container { width: 100%; max-width: 500px; }
-        .card { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: var(--primary); border: none; color: white; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--primary); border: none; color: white; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: var(--accent); }
         .hidden { display: none; }
-        .link-btn { background: #059669; display: block; text-align: center; text-decoration: none; color: white; padding: 12px; border-radius: 6px; }
+        .zalo-btn { background: #0ea5e9; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 8px; color: white; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -20,32 +25,40 @@
 <div class="container">
     <div class="card">
         <h3>Vượt link lấy Key Free</h3>
-        <a id="linkFreeOut" href="#" class="link-btn" target="_blank">Chưa cấu hình Link</a>
+        <a id="linkFreeOut" href="#" class="zalo-btn" target="_blank">Vượt link tại đây</a>
     </div>
 
     <div class="card">
-        <h3>Nhập Key</h3>
-        <input type="text" id="inputKey" placeholder="Nhập Key Free hoặc Vip...">
-        <button onclick="checkKey()">Kiểm tra</button>
-        <p id="result" style="margin-top: 10px;"></p>
+        <h3>Kích hoạt hệ thống</h3>
+        <input type="text" id="inputKey" placeholder="Nhập Key...">
+        <button onclick="checkKey()">Kiểm tra Key</button>
+        <p id="result" style="text-align: center; margin-top: 10px;"></p>
     </div>
 
     <div class="card">
         <h3>Mục Admin</h3>
-        <input type="password" id="adminPass" placeholder="Nhập key Admin...">
+        <input type="password" id="adminPass" placeholder="Key Admin...">
         <button onclick="accessAdmin()">Truy cập</button>
 
         <div id="adminPanel" class="hidden">
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #334155;">
-            <h4>Thêm Acc</h4>
-            <input type="text" id="newKey" placeholder="Mã Key">
-            <textarea id="newAcc" placeholder="Dữ liệu Acc..."></textarea>
-            <button onclick="saveAcc()" style="background: #059669;">Lưu Acc</button>
-            
-            <h4 style="margin-top: 20px;">Cấu hình Vượt Link</h4>
-            <input type="text" id="newLink" placeholder="URL vượt link...">
-            <button onclick="saveLink()" style="background: #ea580c;">Lưu Link</button>
+            <button onclick="toggleTools()" style="background:#475569; margin: 10px 0;">Ẩn/Hiện Công cụ</button>
+            <div id="adminTools">
+                <hr>
+                <h4>Thêm Acc</h4>
+                <input type="text" id="newKey" placeholder="Mã Key">
+                <textarea id="newAcc" placeholder="Dữ liệu Acc..."></textarea>
+                <button onclick="saveAcc()" style="background: #059669;">Lưu Acc</button>
+                
+                <h4 style="margin-top: 15px;">Vượt Link</h4>
+                <input type="text" id="newLink" placeholder="URL vượt link...">
+                <button onclick="saveLink()" style="background: #ea580c;">Lưu Link</button>
+            </div>
         </div>
+    </div>
+
+    <div class="card">
+        <h3>Mua Key VIP</h3>
+        <a href="https://zalo.me/037332056" class="zalo-btn">Liên hệ Zalo: 037332056</a>
     </div>
 </div>
 
@@ -53,13 +66,16 @@
     function accessAdmin() {
         if(document.getElementById('adminPass').value === "Locnguyen") {
             document.getElementById('adminPanel').classList.remove('hidden');
-        } else { alert("Sai mật khẩu Admin!"); }
+        } else { alert("Sai mật khẩu!"); }
+    }
+
+    function toggleTools() {
+        const tools = document.getElementById('adminTools');
+        tools.style.display = tools.style.display === 'none' ? 'block' : 'none';
     }
 
     function saveAcc() {
-        const k = document.getElementById('newKey').value;
-        const a = document.getElementById('newAcc').value;
-        localStorage.setItem('acc_' + k, a);
+        localStorage.setItem('acc_' + document.getElementById('newKey').value, document.getElementById('newAcc').value);
         alert("Đã lưu!");
     }
 
@@ -67,22 +83,17 @@
         const l = document.getElementById('newLink').value;
         localStorage.setItem('link', l);
         document.getElementById('linkFreeOut').href = l;
-        document.getElementById('linkFreeOut').innerText = "Vượt link tại đây";
-        alert("Đã lưu link!");
+        alert("Đã lưu!");
     }
 
     function checkKey() {
-        const k = document.getElementById('inputKey').value;
-        const res = localStorage.getItem('acc_' + k);
-        document.getElementById('result').innerText = res ? "Acc: " + res : "Key sai hoặc không tồn tại!";
+        const res = localStorage.getItem('acc_' + document.getElementById('inputKey').value);
+        document.getElementById('result').innerText = res ? "Acc: " + res : "Key sai!";
     }
 
     window.onload = () => {
         const l = localStorage.getItem('link');
-        if(l) { 
-            document.getElementById('linkFreeOut').href = l; 
-            document.getElementById('linkFreeOut').innerText = "Vượt link tại đây"; 
-        }
+        if(l) document.getElementById('linkFreeOut').href = l;
     }
 </script>
 </body>
