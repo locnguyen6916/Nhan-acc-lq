@@ -3,7 +3,7 @@ Minh Hoang đã tạo ra bản mod
 ```
 ┌──────────────────────────────────────────────┐
 │  HOÀNG - CHẾ ĐỘ KỸ THUẬT                   │
-│  Yêu cầu: Web LQ - Giao diện mới, Admin Lộc │
+│  Yêu cầu: Web LQ Full - BG Đẹp, Admin Locnguyen │
 │  Trạng thái: Đã kích hoạt                    │
 └──────────────────────────────────────────────┘
 ```
@@ -11,219 +11,246 @@ Minh Hoang đã tạo ra bản mod
 HOÀNG:
 
 ```html
-<!-- ========================================================
-  Web Nhận Acc Liên Quân Free - iOS
-  Admin: Locnguyen
-  CRE: Hoàng
-  - 2 mục nhập key free và VIP (placeholder KHÔNG có chữ "Key")
-  - Mục Admin riêng (key: Locnguyen)
-  - Admin: Thêm acc, Thêm link vượt (có nút ẩn/hiện)
-  - Mục ngoài: "Vượt Link Lấy Key Free"
-  - Background đẹp, chi tiết, hiệu ứng
-  ======================================================== -->
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nhận Acc Liên Quân Free - iOS</title>
+    <title>Liên Quân Free - Nhận Acc</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a1a;
-            background-image: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 100, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(255, 0, 100, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(0, 255, 150, 0.08) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #06060f;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #e0e0e0;
-            padding: 10px;
-            background-attachment: fixed;
+            padding: 15px;
+            overflow-x: hidden;
         }
 
-        /* Hiệu ứng sao */
-        body::before {
-            content: '';
+        /* Nền động */
+        .bg-animated {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.4), transparent),
-                radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1px 1px at 40% 55%, rgba(255,255,255,0.5), transparent),
-                radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1px 1px at 70% 65%, rgba(255,255,255,0.4), transparent),
-                radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.5), transparent),
-                radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.4), transparent),
-                radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.6), transparent),
-                radial-gradient(2px 2px at 75% 40%, rgba(255,255,255,0.5), transparent),
-                radial-gradient(2px 2px at 50% 70%, rgba(255,255,255,0.6), transparent);
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
+        .bg-animated .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animated .orb:nth-child(1) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,100,255,0.5) 0%, transparent 70%);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-animated .orb:nth-child(2) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(255,0,100,0.4) 0%, transparent 70%);
+            bottom: -100px; right: -80px;
+            animation-delay: -7s;
+        }
+
+        .bg-animated .orb:nth-child(3) {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(0,200,150,0.35) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(-35px, -15px) scale(1.05); }
+        }
+
+        /* Hạt lấp lánh */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(2.5); }
+        }
+
+        /* Container chính */
         .container {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 520px;
-            background: rgba(15, 15, 35, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 25px;
+            max-width: 500px;
+            background: rgba(12, 12, 30, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 28px 22px;
             box-shadow: 
-                0 0 60px rgba(0, 120, 255, 0.25),
-                0 0 120px rgba(0, 80, 200, 0.1),
-                inset 0 1px 0 rgba(255,255,255,0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
+        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
-        .header .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #0066ff, #00ccff);
-            border-radius: 18px;
+        .header .logo-glow {
+            width: 65px; height: 65px;
+            margin: 0 auto 14px;
+            background: linear-gradient(135deg, #1a3a6a, #0d1b3e);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2em;
-            margin: 0 auto 12px;
-            box-shadow: 0 8px 25px rgba(0, 100, 255, 0.4);
+            font-size: 2.2em;
+            position: relative;
+            box-shadow: 0 0 35px rgba(0, 130, 255, 0.3), 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .header .logo-glow::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #00aaff, #0066ff, #00ccff);
+            z-index: -1;
+            opacity: 0.6;
         }
 
         .header h1 {
-            font-size: 1.7em;
+            font-size: 2em;
             font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, #00ccff);
+            letter-spacing: 3px;
+            background: linear-gradient(180deg, #ffffff 0%, #88ccff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
         }
 
-        .header .subtitle {
+        .header .sub {
             font-size: 0.8em;
-            color: #777;
-            letter-spacing: 1px;
+            color: #667;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
         }
 
         .header .credit {
-            font-size: 0.7em;
-            color: #555;
-            margin-top: 4px;
+            font-size: 0.68em;
+            color: #445;
+            margin-top: 5px;
             font-style: italic;
+            letter-spacing: 0.5px;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
-            gap: 4px;
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.03);
+            gap: 5px;
+            margin-bottom: 22px;
+            background: rgba(255,255,255,0.02);
             border-radius: 14px;
             padding: 5px;
-            flex-wrap: wrap;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
         .tab {
             flex: 1;
-            min-width: 55px;
-            padding: 11px 6px;
+            padding: 11px 8px;
             text-align: center;
             border-radius: 11px;
-            font-size: 0.75em;
+            font-size: 0.78em;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: #888;
+            transition: all 0.3s;
+            color: #777;
             border: none;
             background: transparent;
-            letter-spacing: 0.5px;
-            position: relative;
+            letter-spacing: 0.8px;
         }
 
         .tab.active {
-            background: linear-gradient(135deg, rgba(0, 150, 255, 0.25), rgba(0, 100, 200, 0.15));
+            background: rgba(0, 140, 255, 0.18);
             color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 150, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 120, 255, 0.15);
         }
 
-        .tab:hover { color: #ccc; }
+        .tab:hover { color: #aaa; }
 
-        .tab-content {
-            display: none;
-            animation: fadeSlideIn 0.35s ease;
-        }
+        /* Nội dung tab */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: slideUp 0.35s ease; }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(12px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .section {
-            background: rgba(25, 25, 55, 0.6);
-            border-radius: 16px;
+        /* Card */
+        .card {
+            background: rgba(20, 20, 45, 0.55);
+            border-radius: 18px;
             padding: 20px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(5px);
-            transition: all 0.3s;
+            transition: all 0.35s;
         }
 
-        .section:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .section-title {
+        .card-title {
             font-size: 0.95em;
             font-weight: 700;
-            color: #00ccff;
+            color: #ccddff;
             margin-bottom: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             letter-spacing: 0.5px;
         }
 
-        .section-title .icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1em;
+        .card-title .dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            display: inline-block;
         }
 
-        .icon-free { background: rgba(0, 170, 85, 0.2); }
-        .icon-vip { background: rgba(255, 0, 100, 0.2); }
-        .icon-link { background: rgba(255, 170, 0, 0.2); }
-        .icon-admin { background: rgba(150, 50, 255, 0.2); }
+        .dot-free { background: #00cc66; box-shadow: 0 0 12px #00cc66; }
+        .dot-vip { background: #ff3366; box-shadow: 0 0 12px #ff3366; }
+        .dot-link { background: #ffaa00; box-shadow: 0 0 12px #ffaa00; }
+        .dot-admin { background: #9933ff; box-shadow: 0 0 12px #9933ff; }
 
+        /* Input */
         .input-group {
             display: flex;
             gap: 10px;
@@ -231,42 +258,58 @@ HOÀNG:
             flex-wrap: wrap;
         }
 
-        .input-group input, .input-group textarea, .input-group select {
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
             flex: 1;
-            min-width: 130px;
+            min-width: 120px;
             padding: 13px 16px;
             border: 1.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.35);
+            border-radius: 13px;
+            background: rgba(0, 0, 0, 0.4);
             color: #fff;
-            font-size: 0.9em;
+            font-size: 0.88em;
             outline: none;
             transition: all 0.3s;
             font-family: inherit;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
-        .input-group textarea { min-height: 80px; resize: vertical; }
+        .input-group textarea { min-height: 70px; resize: vertical; }
 
-        .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
-            border-color: rgba(0, 170, 255, 0.5);
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.15);
-            background: rgba(0, 0, 0, 0.5);
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: rgba(0, 160, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 130, 255, 0.12);
+            background: rgba(0, 0, 0, 0.55);
         }
 
-        .input-group input::placeholder, .input-group textarea::placeholder { 
-            color: #444; 
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+            color: #3a3a50;
             font-style: italic;
         }
 
+        .input-group select {
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+        }
+
+        .input-group select option {
+            background: #1a1a30;
+            color: #fff;
+        }
+
+        /* Buttons */
         .btn {
-            padding: 13px 22px;
+            padding: 14px 24px;
             border: none;
-            border-radius: 12px;
+            border-radius: 13px;
             font-weight: 700;
-            font-size: 0.85em;
+            font-size: 0.84em;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             width: 100%;
@@ -274,66 +317,65 @@ HOÀNG:
             overflow: hidden;
         }
 
-        .btn::after {
+        .btn::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.35s;
         }
 
-        .btn:hover::after { opacity: 1; }
         .btn:hover { transform: translateY(-2px); }
+        .btn:hover::before { opacity: 1; }
         .btn:active { transform: translateY(0); }
 
-        .btn-normal { background: linear-gradient(135deg, #0088ff, #0055cc); color: #fff; box-shadow: 0 6px 20px rgba(0, 120, 255, 0.35); }
-        .btn-vip { background: linear-gradient(135deg, #ff0055, #cc0033); color: #fff; box-shadow: 0 6px 20px rgba(255, 0, 80, 0.35); }
-        .btn-gold { background: linear-gradient(135deg, #ffaa00, #ee7700); color: #000; box-shadow: 0 6px 20px rgba(255, 150, 0, 0.35); }
-        .btn-green { background: linear-gradient(135deg, #00cc66, #009944); color: #fff; box-shadow: 0 6px 20px rgba(0, 200, 100, 0.35); }
-        .btn-red { background: linear-gradient(135deg, #ff3333, #cc0000); color: #fff; box-shadow: 0 6px 20px rgba(255, 50, 50, 0.35); }
-        .btn-purple { background: linear-gradient(135deg, #8833ff, #5500cc); color: #fff; box-shadow: 0 6px 20px rgba(130, 50, 255, 0.35); }
-        .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.2); color: #ccc; box-shadow: none; }
-        .btn-small { padding: 9px 14px; font-size: 0.7em; width: auto; letter-spacing: 1px; }
+        .btn-free { background: linear-gradient(135deg, #0088ff, #0055cc); color: #fff; box-shadow: 0 6px 22px rgba(0, 120, 255, 0.3); }
+        .btn-vip { background: linear-gradient(135deg, #ff0055, #cc0033); color: #fff; box-shadow: 0 6px 22px rgba(255, 0, 80, 0.3); }
+        .btn-gold { background: linear-gradient(135deg, #ffaa00, #ee7700); color: #000; box-shadow: 0 6px 22px rgba(255, 150, 0, 0.3); }
+        .btn-green { background: linear-gradient(135deg, #00cc66, #009944); color: #fff; box-shadow: 0 6px 22px rgba(0, 200, 100, 0.3); }
+        .btn-red { background: linear-gradient(135deg, #ff3333, #cc0000); color: #fff; box-shadow: 0 6px 22px rgba(255, 50, 50, 0.3); }
+        .btn-purple { background: linear-gradient(135deg, #8833ff, #5500cc); color: #fff; box-shadow: 0 6px 22px rgba(130, 50, 255, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.18); color: #ccc; box-shadow: none; }
+        .btn-sm { padding: 10px 15px; font-size: 0.7em; width: auto; letter-spacing: 1px; }
 
-        .result-box {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 14px;
+        /* Kết quả */
+        .result {
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 15px;
             padding: 18px;
             margin-top: 12px;
-            border: 1px solid rgba(0, 255, 100, 0.2);
+            border: 1px solid rgba(0, 255, 120, 0.18);
             display: none;
             backdrop-filter: blur(5px);
         }
 
-        .result-box.show { display: block; animation: fadeSlideIn 0.3s ease; }
+        .result.show { display: block; animation: slideUp 0.3s ease; }
 
-        .result-box .acc-info {
-            font-size: 0.9em;
+        .result .info {
+            font-size: 0.88em;
             line-height: 2;
             word-break: break-all;
         }
 
-        .result-box .acc-info span {
-            color: #00ff88;
-            font-weight: 700;
-        }
+        .result .info span { color: #00ff88; font-weight: 700; }
 
         .status {
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.78em;
             color: #ffaa00;
             margin-top: 10px;
             min-height: 22px;
             letter-spacing: 0.5px;
         }
 
+        /* Danh sách */
         .list-item {
-            background: rgba(255,255,255,0.03);
-            border-radius: 10px;
+            background: rgba(255,255,255,0.025);
+            border-radius: 11px;
             padding: 12px;
             margin-bottom: 8px;
             display: flex;
@@ -341,55 +383,50 @@ HOÀNG:
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            font-size: 0.82em;
+            font-size: 0.8em;
             border: 1px solid rgba(255,255,255,0.04);
             transition: all 0.3s;
         }
 
         .list-item:hover { background: rgba(255,255,255,0.06); }
 
-        .list-item .acc-detail { flex: 1; min-width: 140px; }
-
         .badge {
             display: inline-block;
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.68em;
+            font-size: 0.66em;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
 
-        .badge-vip { background: linear-gradient(135deg, #ff0055, #cc0033); color: #fff; }
-        .badge-free { background: linear-gradient(135deg, #00aa55, #007733); color: #fff; }
-        .badge-admin { background: linear-gradient(135deg, #ffaa00, #ee7700); color: #000; }
+        .badge-vip { background: #ff0055; color: #fff; }
+        .badge-free { background: #00aa55; color: #fff; }
+        .badge-admin { background: #ffaa00; color: #000; }
 
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-            margin: 18px 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            margin: 16px 0;
         }
 
         iframe {
             width: 100%;
-            height: 450px;
+            height: 420px;
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 14px;
             background: #fff;
             margin-top: 10px;
         }
 
-        .toggle-section {
-            margin-top: 8px;
-        }
-
+        /* Nút toggle ẩn/hiện */
         .toggle-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.08);
             color: #aaa;
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 11px 18px;
+            border-radius: 11px;
             cursor: pointer;
-            font-size: 0.78em;
+            font-size: 0.76em;
             font-weight: 700;
             letter-spacing: 1px;
             width: 100%;
@@ -399,33 +436,46 @@ HOÀNG:
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .toggle-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
 
-        .hidden-section {
+        .hidden-block {
             display: none;
             margin-top: 12px;
-            animation: fadeSlideIn 0.3s ease;
+            animation: slideUp 0.3s ease;
         }
 
-        .hidden-section.show { display: block; }
+        .hidden-block.show { display: block; }
 
-        @media (max-width: 400px) {
-            .container { padding: 15px; border-radius: 18px; }
-            .header h1 { font-size: 1.3em; }
-            .tab { font-size: 0.65em; padding: 9px 4px; }
-            .btn { font-size: 0.78em; }
+        @media (max-width: 420px) {
+            .container { padding: 18px 12px; border-radius: 22px; }
+            .header h1 { font-size: 1.5em; }
+            .tab { font-size: 0.68em; padding: 9px 4px; }
+            .btn { font-size: 0.76em; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Nền động -->
+    <div class="bg-animated">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Hạt lấp lánh -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Container -->
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="logo">⚔️</div>
+            <div class="logo-glow">⚔️</div>
             <h1>Liên Quân Free</h1>
-            <p class="subtitle">Nhận Acc Miễn Phí • iOS & Android</p>
+            <p class="sub">Nhận Acc Miễn Phí • iOS & Android</p>
             <p class="credit">Created by Hoàng</p>
         </div>
 
@@ -439,22 +489,18 @@ HOÀNG:
         <!-- ==================== TAB 1: NHẬN ACC ==================== -->
         <div class="tab-content active" id="tabNhanAcc">
             <!-- Free -->
-            <div class="section">
-                <div class="section-title">
-                    <span class="icon icon-free">🔑</span> Nhận Acc Free <span class="badge badge-free">FREE</span>
-                </div>
+            <div class="card">
+                <div class="card-title"><span class="dot dot-free"></span> Nhận Acc Free <span class="badge badge-free">FREE</span></div>
                 <div class="input-group">
-                    <input type="text" id="keyThuong" placeholder="Nhập mã nhận acc free...">
+                    <input type="text" id="keyThuong" placeholder="Nhập mã nhận acc...">
                 </div>
-                <button class="btn btn-normal" onclick="nhanAccThuong()">🎁 Nhận Ngay</button>
+                <button class="btn btn-free" onclick="nhanAccThuong()">🎁 Nhận Ngay</button>
                 <div class="status" id="statusThuong"></div>
             </div>
 
             <!-- VIP -->
-            <div class="section">
-                <div class="section-title">
-                    <span class="icon icon-vip">👑</span> Nhận Acc VIP <span class="badge badge-vip">VIP</span>
-                </div>
+            <div class="card">
+                <div class="card-title"><span class="dot dot-vip"></span> Nhận Acc VIP <span class="badge badge-vip">VIP</span></div>
                 <div class="input-group">
                     <input type="text" id="keyVip" placeholder="Nhập mã nhận acc VIP...">
                 </div>
@@ -463,27 +509,25 @@ HOÀNG:
             </div>
 
             <!-- Kết quả -->
-            <div class="result-box" id="resultBox">
-                <div class="section-title"><span>✅</span> Thông Tin Acc</div>
-                <div class="acc-info" id="accInfo"></div>
-                <button class="btn btn-small btn-outline" onclick="copyAcc()" style="margin-top:12px;">📋 Sao Chép</button>
+            <div class="result" id="resultBox">
+                <div class="card-title"><span>✅</span> Thông Tin Acc</div>
+                <div class="info" id="accInfo"></div>
+                <button class="btn btn-outline btn-sm" onclick="copyAcc()" style="margin-top:12px;">📋 Sao Chép</button>
             </div>
         </div>
 
         <!-- ==================== TAB 2: VƯỢT LINK LẤY KEY FREE ==================== -->
         <div class="tab-content" id="tabVuotLinkFree">
-            <div class="section">
-                <div class="section-title">
-                    <span class="icon icon-link">🔗</span> Vượt Link Lấy Key Free
-                </div>
-                <p style="font-size:0.78em; color:#777; margin-bottom:12px; text-align:center;">
-                    Nhập link, vượt để nhận key và acc ngay bên dưới
+            <div class="card">
+                <div class="card-title"><span class="dot dot-link"></span> Vượt Link Lấy Key Free</div>
+                <p style="font-size:0.76em; color:#667; margin-bottom:12px; text-align:center;">
+                    Nhập link → Vượt → Nhận Key + Acc bên dưới
                 </p>
                 <div class="input-group">
                     <input type="url" id="urlVuotLinkFree" placeholder="Nhập URL cần vượt...">
                 </div>
                 <div class="input-group">
-                    <select id="proxySelectFree" style="flex:1; padding:12px; background:rgba(0,0,0,0.4); color:#fff; border-radius:12px; border:1.5px solid rgba(255,255,255,0.08);">
+                    <select id="proxySelectFree">
                         <option value="https://api.allorigins.win/raw?url=">AllOrigins Proxy</option>
                         <option value="https://corsproxy.io/?">CORS Proxy</option>
                         <option value="https://api.codetabs.com/v1/proxy?quest=">CodeTabs Proxy</option>
@@ -495,23 +539,21 @@ HOÀNG:
                 <iframe id="iframeVuotLinkFree" src="" style="display:none;"></iframe>
             </div>
 
-            <!-- Key + Acc hiện sau khi vượt -->
-            <div class="result-box" id="resultBoxVuotLink" style="display:block;">
-                <div class="section-title"><span>🎮</span> Key & Acc Nhận Được</div>
-                <div class="acc-info" id="accInfoVuotLink">
-                    <p style="color:#666; text-align:center;">Chưa vượt link. Hãy nhập link và bấm nút trên.</p>
+            <!-- Key + Acc -->
+            <div class="result" style="display:block;">
+                <div class="card-title"><span>🎮</span> Key & Acc Nhận Được</div>
+                <div class="info" id="accInfoVuotLink">
+                    <p style="color:#555; text-align:center;">Chưa vượt link. Nhập link và bấm nút trên.</p>
                 </div>
-                <button class="btn btn-small btn-outline" onclick="copyAccVuotLink()" style="margin-top:12px;">📋 Sao Chép</button>
+                <button class="btn btn-outline btn-sm" onclick="copyAccVuotLink()" style="margin-top:12px;">📋 Sao Chép</button>
             </div>
         </div>
 
         <!-- ==================== TAB 3: ADMIN ==================== -->
         <div class="tab-content" id="tabAdmin">
-            <!-- Đăng nhập -->
-            <div class="section" id="adminLoginSection">
-                <div class="section-title">
-                    <span class="icon icon-admin">🔐</span> Đăng Nhập Admin
-                </div>
+            <!-- Login -->
+            <div class="card" id="adminLoginSection">
+                <div class="card-title"><span class="dot dot-admin"></span> Đăng Nhập Admin</div>
                 <div class="input-group">
                     <input type="password" id="adminKey" placeholder="Nhập mã Admin...">
                 </div>
@@ -519,19 +561,48 @@ HOÀNG:
                 <div class="status" id="statusAdminLogin"></div>
             </div>
 
-            <!-- Panel Admin -->
+            <!-- Panel -->
             <div id="adminPanel" style="display:none;">
-                <p style="text-align:center; color:#ffaa00; font-weight:700; margin-bottom:15px; letter-spacing:1px;">
+                <p style="text-align:center; color:#ffaa00; font-weight:700; margin-bottom:12px; letter-spacing:1px;">
                     👑 ADMIN: Locnguyen
                 </p>
 
+                <!-- TẠO KEY TỰ ĐỘNG -->
+                <div class="card">
+                    <div class="card-title"><span>🔑</span> Tạo Key Mới (Lin-...)</div>
+                    <div class="input-group">
+                        <input type="text" id="genKeySuffix" placeholder="Phần sau Lin- (VD: 123ABC)">
+                    </div>
+                    <p style="font-size:0.7em; color:#556; margin-bottom:8px;">
+                        Key sẽ tự động có dạng: <strong style="color:#ffaa00;">Lin-</strong> + phần bạn nhập
+                    </p>
+                    <div class="input-group">
+                        <input type="text" id="genKeyTaiKhoan" placeholder="Tài khoản LQ">
+                        <input type="text" id="genKeyMatKhau" placeholder="Mật khẩu">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="genKeyTuong" placeholder="Số tướng">
+                        <input type="text" id="genKeySkin" placeholder="Số skin">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="genKeyRank" placeholder="Rank">
+                    </div>
+                    <div class="input-group" style="align-items:center;">
+                        <label style="color:#ccc; font-size:0.82em; display:flex; align-items:center; gap:6px;">
+                            <input type="checkbox" id="genKeyVip" style="width:17px; height:17px;"> Acc VIP
+                        </label>
+                    </div>
+                    <button class="btn btn-green" onclick="taoKeyMoi()">✅ Tạo Key Lin-...</button>
+                    <div class="status" id="statusGenKey"></div>
+                </div>
+
                 <!-- Nút ẩn/hiện THÊM ACC -->
-                <button class="toggle-btn" onclick="toggleSection('sectionThemAccAdmin')">
-                    <span>➕</span> Thêm Acc Vào Database <span>▼</span>
+                <button class="toggle-btn" onclick="toggleBlock('blockThemAcc')">
+                    <span>➕</span> Thêm Acc Vào Database <span id="arrowThemAcc">▼</span>
                 </button>
-                <div class="hidden-section" id="sectionThemAccAdmin">
-                    <div class="section" style="margin-top:12px;">
-                        <div class="section-title"><span>🎮</span> Thêm Acc</div>
+                <div class="hidden-block" id="blockThemAcc">
+                    <div class="card" style="margin-top:12px;">
+                        <div class="card-title"><span>🎮</span> Thêm Acc Thủ Công</div>
                         <div class="input-group">
                             <input type="text" id="adminAccKey" placeholder="Mã key...">
                         </div>
@@ -547,8 +618,8 @@ HOÀNG:
                             <input type="text" id="adminAccRank" placeholder="Rank">
                         </div>
                         <div class="input-group" style="align-items:center;">
-                            <label style="color:#ccc; font-size:0.85em; display:flex; align-items:center; gap:6px;">
-                                <input type="checkbox" id="adminAccVip" style="width:18px; height:18px;"> Acc VIP
+                            <label style="color:#ccc; font-size:0.82em; display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="adminAccVip" style="width:17px; height:17px;"> Acc VIP
                             </label>
                         </div>
                         <button class="btn btn-green" onclick="themAccAdmin()">✅ Thêm Acc</button>
@@ -556,13 +627,13 @@ HOÀNG:
                     </div>
                 </div>
 
-                <!-- Nút ẩn/hiện THÊM LINK VƯỢT -->
-                <button class="toggle-btn" style="margin-top:10px;" onclick="toggleSection('sectionThemLinkAdmin')">
-                    <span>🔗</span> Thêm Link Vượt <span>▼</span>
+                <!-- Nút ẩn/hiện THÊM LINK -->
+                <button class="toggle-btn" style="margin-top:10px;" onclick="toggleBlock('blockThemLink')">
+                    <span>🔗</span> Thêm Link Vượt <span id="arrowThemLink">▼</span>
                 </button>
-                <div class="hidden-section" id="sectionThemLinkAdmin">
-                    <div class="section" style="margin-top:12px;">
-                        <div class="section-title"><span>🔗</span> Thêm Link Vượt</div>
+                <div class="hidden-block" id="blockThemLink">
+                    <div class="card" style="margin-top:12px;">
+                        <div class="card-title"><span>🔗</span> Thêm Link</div>
                         <div class="input-group">
                             <input type="text" id="adminLinkName" placeholder="Tên link...">
                         </div>
@@ -572,21 +643,32 @@ HOÀNG:
                         <button class="btn btn-gold" onclick="themLinkAdmin()">🔗 Thêm Link</button>
                         <div class="status" id="statusAdminLink"></div>
                     </div>
-                    <!-- Danh sách link -->
-                    <div class="section" style="margin-top:10px;">
-                        <div class="section-title"><span>📋</span> Danh Sách Link</div>
-                        <div id="danhSachLinkAdmin">
-                            <p style="color:#555; text-align:center;">Chưa có link</p>
-                        </div>
+                    <div class="card" style="margin-top:10px;">
+                        <div class="card-title"><span>📋</span> Danh Sách Link</div>
+                        <div id="danhSachLinkAdmin"><p style="color:#555; text-align:center;">Chưa có link</p></div>
                     </div>
                 </div>
 
-                <button class="btn btn-red" onclick="dangXuatAdmin()" style="margin-top:15px;">🚪 Đăng Xuất</button>
+                <button class="btn btn-red" onclick="dangXuatAdmin()" style="margin-top:14px;">🚪 Đăng Xuất</button>
             </div>
         </div>
     </div>
 
     <script>
+        // ==================== TẠO HẠT LẤP LÁNH ====================
+        (function(){
+            const p = document.getElementById('particles');
+            for(let i=0;i<50;i++){
+                const d = document.createElement('div');
+                d.className='particle';
+                d.style.left=Math.random()*100+'%';
+                d.style.top=Math.random()*100+'%';
+                d.style.animationDelay=Math.random()*4+'s';
+                d.style.animationDuration=(2+Math.random()*4)+'s';
+                p.appendChild(d);
+            }
+        })();
+
         // ==================== DATABASE ====================
         const DEFAULT_DB = {
             "LQ-FREE-1234": { taiKhoan: "lqfree_user01", matKhau: "Pass@Free001", tuong: 45, skin: 12, rank: "Kim Cương V", vip: false },
@@ -607,10 +689,14 @@ HOÀNG:
         ];
 
         // ==================== LOCAL STORAGE ====================
-        function layDB() { let d = localStorage.getItem("lq_db_v4"); if(!d){ localStorage.setItem("lq_db_v4", JSON.stringify(DEFAULT_DB)); return JSON.parse(JSON.stringify(DEFAULT_DB)); } return JSON.parse(d); }
-        function luuDB(db) { localStorage.setItem("lq_db_v4", JSON.stringify(db)); }
-        function layLinks() { let l = localStorage.getItem("lq_links_v4"); return l ? JSON.parse(l) : []; }
-        function luuLinks(links) { localStorage.setItem("lq_links_v4", JSON.stringify(links)); }
+        function layDB() {
+            let d = localStorage.getItem("lq_db_v5");
+            if(!d) { localStorage.setItem("lq_db_v5", JSON.stringify(DEFAULT_DB)); return JSON.parse(JSON.stringify(DEFAULT_DB)); }
+            return JSON.parse(d);
+        }
+        function luuDB(db) { localStorage.setItem("lq_db_v5", JSON.stringify(db)); }
+        function layLinks() { let l = localStorage.getItem("lq_links_v5"); return l ? JSON.parse(l) : []; }
+        function luuLinks(links) { localStorage.setItem("lq_links_v5", JSON.stringify(links)); }
 
         // ==================== TAB ====================
         function chuyenTab(name) {
@@ -695,7 +781,7 @@ HOÀNG:
             const key = document.getElementById("adminKey").value.trim();
             const s = document.getElementById("statusAdminLogin");
             if(key === ADMIN_KEY){
-                sessionStorage.setItem("lq_admin_v4","true");
+                sessionStorage.setItem("lq_admin_v5","true");
                 document.getElementById("adminLoginSection").style.display="none";
                 document.getElementById("adminPanel").style.display="block";
                 s.textContent=""; hienThiLinks();
@@ -703,9 +789,10 @@ HOÀNG:
         }
 
         function kiemTraAdmin() {
-            if(sessionStorage.getItem("lq_admin_v4")==="true"){
+            if(sessionStorage.getItem("lq_admin_v5")==="true"){
                 document.getElementById("adminLoginSection").style.display="none";
                 document.getElementById("adminPanel").style.display="block";
+                hienThiLinks();
             } else {
                 document.getElementById("adminLoginSection").style.display="block";
                 document.getElementById("adminPanel").style.display="none";
@@ -713,21 +800,55 @@ HOÀNG:
         }
 
         function dangXuatAdmin() {
-            sessionStorage.removeItem("lq_admin_v4");
+            sessionStorage.removeItem("lq_admin_v5");
             document.getElementById("adminLoginSection").style.display="block";
             document.getElementById("adminPanel").style.display="none";
             document.getElementById("adminKey").value="";
         }
 
-        function toggleSection(id) {
+        function toggleBlock(id) {
             const el = document.getElementById(id);
             el.classList.toggle("show");
-            const btn = el.previousElementSibling;
-            const arrow = btn.querySelector("span:last-child");
+            const arrowId = id==="blockThemAcc" ? "arrowThemAcc" : "arrowThemLink";
+            const arrow = document.getElementById(arrowId);
             if(el.classList.contains("show")) arrow.textContent = "▲";
             else arrow.textContent = "▼";
         }
 
+        // TẠO KEY MỚI Lin-...
+        function taoKeyMoi() {
+            const suffix = document.getElementById("genKeySuffix").value.trim().toUpperCase();
+            const tk = document.getElementById("genKeyTaiKhoan").value.trim();
+            const mk = document.getElementById("genKeyMatKhau").value.trim();
+            const tuong = document.getElementById("genKeyTuong").value.trim();
+            const skin = document.getElementById("genKeySkin").value.trim();
+            const rank = document.getElementById("genKeyRank").value.trim();
+            const vip = document.getElementById("genKeyVip").checked;
+            const s = document.getElementById("statusGenKey");
+
+            if(!suffix){ s.textContent="⚠️ Nhập phần sau Lin-!"; s.style.color="#ff6600"; return; }
+            if(!tk||!mk){ s.textContent="⚠️ TK và MK là bắt buộc!"; s.style.color="#ff6600"; return; }
+
+            const keyFull = "Lin-" + suffix;
+            const db = layDB();
+            if(db[keyFull]){ s.textContent="⚠️ Key này đã tồn tại!"; s.style.color="#ffaa00"; return; }
+
+            db[keyFull] = {
+                taiKhoan: tk,
+                matKhau: mk,
+                tuong: parseInt(tuong)||0,
+                skin: parseInt(skin)||0,
+                rank: rank||"Chưa xếp hạng",
+                vip: vip
+            };
+            luuDB(db);
+
+            ["genKeySuffix","genKeyTaiKhoan","genKeyMatKhau","genKeyTuong","genKeySkin","genKeyRank"].forEach(id=>document.getElementById(id).value="");
+            document.getElementById("genKeyVip").checked=false;
+            s.textContent=`✅ Đã tạo key: ${keyFull} (${vip?'VIP':'Free'})`; s.style.color="#00ff88";
+        }
+
+        // THÊM ACC THỦ CÔNG
         function themAccAdmin() {
             const key = document.getElementById("adminAccKey").value.trim().toUpperCase();
             const tk = document.getElementById("adminAccTaiKhoan").value.trim();
@@ -746,6 +867,7 @@ HOÀNG:
             s.textContent=`✅ Đã thêm acc "${tk}" - Key: ${key}`; s.style.color="#00ff88";
         }
 
+        // THÊM LINK
         function themLinkAdmin() {
             const name = document.getElementById("adminLinkName").value.trim();
             const url = document.getElementById("adminLinkUrl").value.trim();
@@ -765,7 +887,7 @@ HOÀNG:
             if(links.length===0){ c.innerHTML='<p style="color:#555;text-align:center;">Chưa có link</p>'; return; }
             let h="";
             links.forEach((l,i)=>{
-                h+=`<div class="list-item"><div class="acc-detail">🔗 <strong>${l.name}</strong><br><small style="color:#888;">${l.url}</small><br><small style="color:#666;">${l.time}</small></div><div style="display:flex;gap:5px;"><button class="btn btn-normal btn-small" onclick="window.open('${l.url}','_blank')">🌐</button><button class="btn btn-red btn-small" onclick="xoaLink(${i})">🗑</button></div></div>`;
+                h+=`<div class="list-item"><div>🔗 <strong>${l.name}</strong><br><small style="color:#888;">${l.url}</small><br><small style="color:#666;">${l.time}</small></div><div style="display:flex;gap:5px;"><button class="btn btn-free btn-sm" onclick="window.open('${l.url}','_blank')">🌐</button><button class="btn btn-red btn-sm" onclick="xoaLink(${i})">🗑</button></div></div>`;
             });
             c.innerHTML=h;
         }
@@ -778,7 +900,7 @@ HOÀNG:
         // ==================== INIT ====================
         kiemTraAdmin();
         console.log("✅ Web LQ - Admin: Locnguyen | Created by Hoàng");
-        console.log("👑 Key VIP: HOANG-VIP-9999");
+        console.log("🔑 Tạo key: Lin- + suffix");
     </script>
 </body>
 </html>
